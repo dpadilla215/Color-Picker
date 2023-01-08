@@ -9,17 +9,31 @@ function initColorPicker(){
         blue: document.getElementById("blue"),
         green: document.getElementById("green")
     };
-    setColorPickerEventListerners(colorBox, rgb);
+    let colorPickers = document.getElementsByClassName("picker");
+    setColorPickerEventListeners(colorBox, rgb, colorPickers);
 }
+function  setColorPickerEventListeners(element, colors, pickerElements) {
+    let pickerLen = pickerElements.length;
+    for (let i = 0; i < pickerLen ; i++) {
+        pickerElements[i].addEventListener('change', () => {
+            let red = colors.red.value;
+            let blue = colors.blue.value;
+            let green =colors.green.value
+            setElementBGColor(element,red, green, blue );
+            setDisplayValues(red, green, blue);
+        });
+    }
+}
+    function setElementBGColor(bgElement, red, green, blue){
+        rgbVal = [red, green, blue].join(',');
+        bgElement.style.backgroundColor = "rgb(" + rgbVal + ")";
+    }
+function setDisplayValues(red, green, blue) {
+    let redVal = document.getElementById("redVal");
+    let greenVal = document.getElementById("greenVal");
+    let blueVal = document.getElementById("blueVal");
 
-function  setColorPickerEventListerners(colorBox, rgb) {
-    rgb.red.addEventListener('change', () => {
-        console.log("Red Value: ", rgb.red.value);
-    });
-    rgb.blue.addEventListener('change', () => {
-        console.log("Blue Value: ", rgb.blue.value);
-    });
-    rgb.green.addEventListener('change', () => {
-        console.log("Green Value: ", rgb.green.value);
-    });
+    redVal.innerText =red;
+    greenVal.innerText =green;
+    blueVal.innerText =blue;
 }
